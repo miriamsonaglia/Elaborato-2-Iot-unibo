@@ -4,6 +4,9 @@
 #include "Task.h"
 #include "Led.h"
 
+extern int wError;
+extern int tError;
+
 class LedTask: public Task{
     public:
         LedTask(int green,int red);
@@ -15,7 +18,7 @@ class LedTask: public Task{
         int red_led_pin;
         Led* green_led;
         Led* red_led;
-        
+        enum {WORKING,ERROR} status;
 };
 
 #endif

@@ -10,8 +10,24 @@ LedTask::LedTask(int green,int red){
 void LedTask::init(){
     green_led = new Led(green_led_pin);
     red_led = new Led(red_led_pin);
+    status = WORKING;
+    green_led->switchOn();
+    red_led->switchOff();
 }
 
 void LedTask::tick(){
-    
+    if(tError || wError){
+        if(status==WORKING){
+            status = ERROR;
+            green_led->switchOff();
+            red_led->switchOn();
+        }
+    }
+    else{
+        if(status==ERROR){
+            status = WORKING;
+            green_led->switchOn();
+            red_led->switchOff();
+        }
+    }
 }
