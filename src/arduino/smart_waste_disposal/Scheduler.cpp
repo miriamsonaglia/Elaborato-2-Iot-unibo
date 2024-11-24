@@ -1,8 +1,9 @@
 #include "Scheduler.h"
 
+//Code retrieved from the iot course (2024-2025)
 void Scheduler::init(int basePeriod){
   this->basePeriod = basePeriod;
-  timer.setupPeriod(basePeriod);  
+  timer.setupPeriod(basePeriod);
   nTasks = 0;
 }
 
@@ -12,10 +13,10 @@ bool Scheduler::addTask(Task* task){
     nTasks++;
     return true;
   } else {
-    return false; 
+    return false;
   }
 }
-  
+
 void Scheduler::schedule(){
   timer.waitForNextTick();
   for (int i = 0; i < nTasks; i++){

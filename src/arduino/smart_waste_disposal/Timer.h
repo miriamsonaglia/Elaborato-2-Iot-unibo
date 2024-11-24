@@ -1,6 +1,7 @@
 #ifndef __TIMER__
 #define __TIMER__
 
+//Code retrieved from the iot course (2024-2025) 
 class Timer {
     
 public:  

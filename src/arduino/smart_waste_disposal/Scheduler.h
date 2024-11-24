@@ -5,17 +5,17 @@
 #include "Task.h"
 
 #define MAX_TASKS 10
-
+//Code retrieved from the iot course (2024-2025)
 class Scheduler {
-  
+
   int basePeriod;
   int nTasks;
-  Task* taskList[MAX_TASKS];  
+  Task* taskList[MAX_TASKS];
   Timer timer;
 
 public:
-  void init(int basePeriod);  
-  virtual bool addTask(Task* task);  
+  void init(int basePeriod);
+  virtual bool addTask(Task* task);
   virtual void schedule();
 };
 

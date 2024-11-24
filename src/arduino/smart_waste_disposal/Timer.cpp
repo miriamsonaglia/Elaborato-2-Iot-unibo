@@ -1,6 +1,7 @@
 #include "Timer.h"
 #include "Arduino.h"
 
+//Code retrieved from the iot course (2024-2025) 
 volatile bool timerFlag;
 
 ISR(TIMER1_COMPA_vect){
