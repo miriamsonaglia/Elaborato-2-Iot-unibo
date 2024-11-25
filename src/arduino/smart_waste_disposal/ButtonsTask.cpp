@@ -3,6 +3,10 @@
 
 #define ALLOWED_TICKS_FOR_COMMAND_RESOLUTIONS 2
 
+//global variables
+extern int openDoor;
+extern int closeDoor;
+
 ButtonsTask::ButtonsTask(int open,int close){
     open_button_pin = open;
     close_button_pin = close;
@@ -18,9 +22,13 @@ void ButtonsTask::tick(){
     if(status == NO_COMMAND){
         if(open_button->isPressed() && !close_button->isPressed()){
             status = OPEN_PENDING;
+            closeDoor = 0;
+            openDoor = 1;
         }
         else if(!open_button->isPressed() && close_button->isPressed()){
             status = CLOSE_PENDING;
+            closeDoor = 1;
+            openDoor = 0;
         }
     }
     else{
@@ -28,6 +36,8 @@ void ButtonsTask::tick(){
         if(ticks_elapsed>=ALLOWED_TICKS_FOR_COMMAND_RESOLUTIONS){
             ticks_elapsed = 0;
             status = NO_COMMAND;
+            closeDoor = 0;
+            openDoor = 0;
         }
     }
 }
