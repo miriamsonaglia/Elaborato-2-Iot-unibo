@@ -8,9 +8,9 @@
 extern int tError;
 extern int wError;
 //global variables (read/write)
-extern int openDoor  = 0;
-extern int closeDoor = 0;
-extern int emptyDoor = 0;
+extern int openDoor;
+extern int closeDoor;
+extern int emptyDoor;
 
 class DoorTask:public Task {
 public:
