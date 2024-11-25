@@ -8,7 +8,7 @@ MotionSensor::MotionSensor(int pin){
 }
 
 bool MotionSensor::movementDetected(){
-    return digitalRead(pin)==HIGH;
+    return DigitallyReadableDevice::isHigh();
 }
 
 bool MotionSensor::hasStatusSwitched(){

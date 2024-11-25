@@ -10,7 +10,7 @@ Button::Button(int pin){
 }
 
 bool Button::isPressed(){
-    return digitalRead(pin)==HIGH;
+    return DigitallyReadableDevice::isHigh();
 }
 
 bool Button::hasStatusSwitched(){

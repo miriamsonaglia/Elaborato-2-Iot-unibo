@@ -11,7 +11,7 @@ LedTask* task_for_leds;
 Scheduler* sched;
 
 /*Global variables*/
-int wError = 0;         //flag variable,checks if waste bin is full
+int wError = 1;         //flag variable,checks if waste bin is full
 int tError = 0;         //flag variable,checks if there is a temperature problem
 int openDoor  = 0;      //flag command, if set to 1 indicates that the door should become open
 int closeDoor = 0;      //flag command, if set to 1 indicates that the door should become closed
@@ -23,7 +23,7 @@ void setup(){
     sched->init(BASE_PERIOD);
     /*Setup tasks*/
     task_for_leds = new LedTask(GREEN_LED_PIN,RED_LED_PIN);
-    task_for_leds->init();
+    task_for_leds->init(BASE_PERIOD*2);
     sched->addTask(task_for_leds);
 }
 
