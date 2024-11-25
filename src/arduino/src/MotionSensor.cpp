@@ -1,5 +1,5 @@
-#include "MotionSensor.h"
-#include "arduino.h"
+#include "../lib/MotionSensor.h"
+#include <Arduino.h>
 
 MotionSensor::MotionSensor(int pin){
   this->previous_status = 0;

@@ -1,5 +1,5 @@
-#include "Button.h"
-#include "arduino.h"
+#include "../lib/Button.h"
+#include <Arduino.h>
 
 
 //Code retrieved (and modified) from the iot course (2024-2025)

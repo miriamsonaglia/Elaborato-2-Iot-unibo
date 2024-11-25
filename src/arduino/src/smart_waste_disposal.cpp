@@ -1,6 +1,6 @@
-#include "LedTask.h"
-#include "Scheduler.h"
-#include "Arduino.h"
+#include "../lib/LedTask.h"
+#include "../lib/Scheduler.h"
+#include <Arduino.h>
 
 #define RED_LED_PIN 12
 #define GREEN_LED_PIN 13
