@@ -4,6 +4,9 @@
 #include "Task.h"
 #include "MotionSensor.h";
 
+//global variables (write)
+extern int sleep_mode;
+
 class MotionTask : public Task{
     public:
         MotionTask(int pin);

@@ -16,18 +16,20 @@ void LedTask::init(){
 }
 
 void LedTask::tick(){
-    if(tError || wError){
-        if(status==WORKING){
-            status = ERROR;
-            green_led->switchOff();
-            red_led->switchOn();
+    if(!sleep_mode){
+        if(tError || wError){
+            if(status==WORKING){
+                status = ERROR;
+                green_led->switchOff();
+                red_led->switchOn();
+            }
         }
-    }
-    else{
-        if(status==ERROR){
-            status = WORKING;
-            green_led->switchOn();
-            red_led->switchOff();
+        else{
+            if(status==ERROR){
+                status = WORKING;
+                green_led->switchOn();
+                red_led->switchOff();
+            }
         }
     }
 }

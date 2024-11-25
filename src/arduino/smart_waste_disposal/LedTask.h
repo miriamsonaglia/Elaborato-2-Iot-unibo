@@ -4,8 +4,10 @@
 #include "Task.h"
 #include "Led.h"
 
+//global variables (read)
 extern int wError;
 extern int tError;
+extern int sleep_mode;
 
 class LedTask: public Task{
     public:
