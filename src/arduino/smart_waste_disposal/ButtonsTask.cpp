@@ -3,16 +3,14 @@
 
 #define ALLOWED_TICKS_FOR_COMMAND_RESOLUTIONS 2
 
-//global variables
-extern int openDoor;
-extern int closeDoor;
 
 ButtonsTask::ButtonsTask(int open,int close){
     open_button_pin = open;
     close_button_pin = close;
 }
 
-void ButtonsTask::init(){
+void ButtonsTask::init(int period){
+    Task::init(period);
     open_button = new Button(open_button_pin);
     close_button = new Button(close_button_pin);
     status =NO_COMMAND;

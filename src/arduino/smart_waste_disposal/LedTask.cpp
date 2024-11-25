@@ -7,7 +7,8 @@ LedTask::LedTask(int green,int red){
     red_led_pin = red;
 }
 
-void LedTask::init(){
+void LedTask::init(int period){
+    Task::init(period);
     green_led = new Led(green_led_pin);
     red_led = new Led(red_led_pin);
     status = WORKING;

@@ -2,13 +2,14 @@
 
 #define MAX_NO_MOVEMENT_BEFORE_SLEEP 20
 
-extern int sleep_mode;
+
 
 MotionTask::MotionTask(int pin){
     sensor_pin = pin;
 }
 
-void MotionTask::init(){
+void MotionTask::init(int period){
+    Task::init(period);
     sensor = new MotionSensor(sensor_pin);
     sleep_mode_counter = 0;
 }

@@ -11,7 +11,7 @@ class MotionTask : public Task{
     public:
         MotionTask(int pin);
         void tick();
-        void init();
+        void init(int period);
     private:
         int sleep_mode_counter;
         int sensor_pin;

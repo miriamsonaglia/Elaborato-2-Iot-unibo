@@ -12,7 +12,7 @@ extern int closeDoor;
 class ButtonsTask: public Task{
     public:
         ButtonsTask(int open,int close);
-        void init();
+        void init(int period);
         void tick();
     private:
         int open_button_pin;

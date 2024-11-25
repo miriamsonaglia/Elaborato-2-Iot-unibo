@@ -12,7 +12,7 @@ extern int sleep_mode;
 class LedTask: public Task{
     public:
         LedTask(int green,int red);
-        void init();
+        void init(int period);
         void tick();
 
     private:

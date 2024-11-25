@@ -1,3 +1,4 @@
+package src;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,22 +12,22 @@ public class OperatorDashboard {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 400);
         frame.setLayout(new BorderLayout());
-        
+
         // Pannello per lo stato del container
         JPanel statusPanel = new JPanel();
         statusPanel.setLayout(new GridLayout(3, 2, 10, 10));
         statusPanel.setBorder(BorderFactory.createTitledBorder("Container Status"));
-        
+
         // Etichette e valori di stato
         JLabel wasteLevelLabel = new JLabel("Filling Percentage:");
         JLabel wasteLevelValue = new JLabel("0%");
-        
+
         JLabel temperatureLabel = new JLabel("Temperature:");
         JLabel temperatureValue = new JLabel("22°C");
-        
+
         JLabel statusLabel = new JLabel("Status:");
         JLabel statusValue = new JLabel("Available");
-        
+
         // Aggiungo le etichette al pannello di stato
         statusPanel.add(wasteLevelLabel);
         statusPanel.add(wasteLevelValue);
