@@ -1,12 +1,13 @@
-#ifndef __DOORTASK
+#ifndef __DOORTASK__
 #define __DOORTASK__
 
 #include "Task.h"
+#include "Door.h"
 
 //global variables (read)
 extern int tError;
 extern int wError;
-//NOTE: following flags should be mutually exclusive or all turned off (open=close=empty=0 OR open xor close xor empty = 1)
+//global variables (read/write)
 extern int openDoor  = 0;
 extern int closeDoor = 0;
 extern int emptyDoor = 0;
@@ -17,6 +18,8 @@ public:
   void init(int period);
   void tick();
 private:
+  int pin;
+  Door* door;
   enum{CLOSED,OPEN,EMPTYING} status;
 };
 
