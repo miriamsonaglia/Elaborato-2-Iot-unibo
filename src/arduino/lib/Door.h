@@ -1,6 +1,6 @@
 #ifndef __DOOR__
 #define __DOOR__
-#include <PWMServo.h>
+#include <Servo.h>
 
 #include "DigitallyReadableDevice.h"
 
@@ -12,7 +12,7 @@ public:
   void empty();
 private:
   int pin;
-  PWMServo* handler;
+  Servo handler;
 };
 
 #endif

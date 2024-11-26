@@ -7,18 +7,18 @@
 //Code retrieved (and modified) from the iot course (2024-2025)
 Door::Door(int pin){
   this->pin = pin;
-  handler->attach(pin);
+  handler.attach(pin);
   pinMode(pin,OUTPUT);
 }
 
 void Door::close(){
-    handler->write(CLOSED_DEGREE);
+    handler.write(CLOSED_DEGREE);
 }
 
 void Door::open(){
-    handler->write(OPEN_DEGREE);
+    handler.write(OPEN_DEGREE);
 }
 
 void Door::empty(){
-    handler->write(EMPTY_DEGREE);
+    handler.write(EMPTY_DEGREE);
 }
