@@ -1,4 +1,4 @@
-#include "../lib/MotionTask.h"
+#include "../lib/Tasks/MotionTask.h"
 
 #define MAX_NO_MOVEMENT_BEFORE_SLEEP 20
 

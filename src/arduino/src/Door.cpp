@@ -1,4 +1,4 @@
-#include "../lib/Door.h"
+#include "../lib/Components/Door.h"
 #include <Arduino.h>
 
 #define CLOSED_DEGREE 90

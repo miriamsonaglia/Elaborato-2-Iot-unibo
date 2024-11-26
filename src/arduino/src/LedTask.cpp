@@ -1,5 +1,5 @@
-#include "../lib/LedTask.h"
-#include "../lib/Led.h"
+#include "../lib/Tasks/LedTask.h"
+#include "../lib/Components/Led.h"
 
 
 LedTask::LedTask(int green,int red){

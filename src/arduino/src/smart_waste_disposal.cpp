@@ -1,6 +1,6 @@
-#include "../lib/LedTask.h";
-#include "../lib/DoorTask.h";
-#include "../lib/Scheduler.h"
+#include "../lib/Tasks/LedTask.h"
+#include "../lib/Tasks/DoorTask.h"
+#include "../lib/Scheduling/Scheduler.h"
 
 
 #define RED_LED_PIN 12

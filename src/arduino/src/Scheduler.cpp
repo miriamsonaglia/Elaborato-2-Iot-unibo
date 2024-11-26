@@ -1,4 +1,4 @@
-#include "../lib/Scheduler.h"
+#include "../lib/Scheduling/Scheduler.h"
 
 //Code retrieved from the iot course (2024-2025)
 void Scheduler::init(int basePeriod){

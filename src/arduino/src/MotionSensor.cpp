@@ -1,4 +1,4 @@
-#include "../lib/MotionSensor.h"
+#include "../lib/Components/MotionSensor.h"
 #include <Arduino.h>
 
 MotionSensor::MotionSensor(int pin){

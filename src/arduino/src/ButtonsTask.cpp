@@ -1,5 +1,5 @@
-#include "../lib/ButtonsTask.h"
-#include "../lib/Button.h"
+#include "../lib/Tasks/ButtonsTask.h"
+#include "../lib/Components/Button.h"
 
 #define ALLOWED_TICKS_FOR_COMMAND_RESOLUTIONS 2
 

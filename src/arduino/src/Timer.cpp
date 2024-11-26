@@ -1,4 +1,4 @@
-#include "../lib/Timer.h"
+#include "../lib/Scheduling/Timer.h"
 #include <TimerOne.h>
 #define NANOSECONDS(x) ((x)*1000)
 
