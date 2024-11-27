@@ -13,12 +13,15 @@ Door::Door(int pin){
 
 void Door::close(){
     handler.write(CLOSED_DEGREE);
+    delay(5);
 }
 
 void Door::open(){
     handler.write(OPEN_DEGREE);
+    delay(5);
 }
 
 void Door::empty(){
     handler.write(EMPTY_DEGREE);
+    delay(5);
 }
