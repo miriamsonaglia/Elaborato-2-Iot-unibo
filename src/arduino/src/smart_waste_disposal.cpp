@@ -1,12 +1,12 @@
 #include "../lib/Tasks/LedTask.h"
 #include "../lib/Tasks/DoorTask.h"
 #include "../lib/Scheduling/Scheduler.h"
-
+#include <Arduino.h>
 
 #define RED_LED_PIN 12
 #define GREEN_LED_PIN 13
 #define DOOR_PIN 6
-#define BASE_PERIOD 100
+#define BASE_PERIOD 1000
 
 /*Scheduler + task definition*/
 LedTask* task_for_leds;
@@ -30,8 +30,9 @@ void setup(){
     sched->addTask(task_for_leds);
 
     task_for_door = new DoorTask(DOOR_PIN);
-    task_for_leds->init(BASE_PERIOD*2);
+    task_for_door->init(BASE_PERIOD*2);
     sched->addTask(task_for_door);
+    Serial.begin(9600);
 }
 
 void loop(){

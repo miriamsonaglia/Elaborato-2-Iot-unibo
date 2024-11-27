@@ -13,6 +13,7 @@ void DoorTask::init(int period){
 }
 
 void DoorTask::tick(){
+    Serial.println("Executing door tick");
     //check presence of error
     if(status != CLOSED){
         if(wError || tError || closeDoor){
@@ -42,4 +43,5 @@ void DoorTask::tick(){
             emptyDoor = 0;
         }
     }
+    Serial.println("Done door tick");
 }

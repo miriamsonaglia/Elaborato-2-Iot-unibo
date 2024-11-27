@@ -8,11 +8,14 @@ class Timer {
     
 public:  
   Timer();
-  void setupFreq(int freq);  
   /* period in ms */
   void setupPeriod(int period);  
   void waitForNextTick();
 
+private:
+  unsigned long last_tick;
+  unsigned long base_period;
+  unsigned long last_timestamp_tracked;
 };
 
 
