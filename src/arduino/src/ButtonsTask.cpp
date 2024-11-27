@@ -1,7 +1,7 @@
 #include "../lib/Tasks/ButtonsTask.h"
 #include "../lib/Components/Button.h"
 
-#define ALLOWED_TICKS_FOR_COMMAND_RESOLUTIONS 2
+#define ALLOWED_TICKS_FOR_COMMAND_RESOLUTIONS 20
 
 
 ButtonsTask::ButtonsTask(int open,int close){
@@ -14,6 +14,7 @@ void ButtonsTask::init(int period){
     open_button = new Button(open_button_pin);
     close_button = new Button(close_button_pin);
     status =NO_COMMAND;
+    Serial.begin(9600);
 }
 
 void ButtonsTask::tick(){
@@ -28,6 +29,10 @@ void ButtonsTask::tick(){
             closeDoor = 1;
             openDoor = 0;
         }
+    }
+    else if(!(emptyDoor | openDoor | closeDoor)){
+        status = NO_COMMAND;
+        ticks_elapsed = 0;
     }
     else{
         ticks_elapsed++;

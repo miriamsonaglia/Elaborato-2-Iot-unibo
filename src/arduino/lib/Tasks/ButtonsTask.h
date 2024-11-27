@@ -4,10 +4,11 @@
 #include "Task.h"
 #include "Button.h"
 
-//global variables (write)
+//global variables (read/write)
 extern int openDoor;
 extern int closeDoor;
-
+//global variables (read)
+extern int emptyDoor;
 
 class ButtonsTask: public Task{
     public:

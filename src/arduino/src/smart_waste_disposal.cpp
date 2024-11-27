@@ -1,7 +1,9 @@
 #include "../lib/Tasks/LedTask.h"
 #include "../lib/Tasks/DoorTask.h"
-#include "../lib/Scheduling/Scheduler.h"
 #include "../lib/Tasks/ButtonsTask.h"
+#include "../lib/Tasks/TemperatureTask.h"
+#include "../lib/Scheduling/Scheduler.h"
+
 #include <Arduino.h>
 
 #define RED_LED_PIN 12
@@ -9,13 +11,16 @@
 #define DOOR_PIN 6
 #define OPEN_BUTTON 2
 #define CLOSE_BUTTON 4
-#define BASE_PERIOD 100
+#define TEMPERATURE_PIN A0
+#define BASE_PERIOD 50
+#define MAX_TEMPERATURE_FOR_ERROR 23.0
 
 /*Scheduler + task definition*/
 LedTask* task_for_leds;
 Scheduler* sched;
 DoorTask* task_for_door;
 ButtonsTask* task_for_button;
+TemperatureTask* task_for_temp;
 
 /*Global variables*/
 int wError = 0;         //flag variable,checks if waste bin is full
@@ -29,6 +34,10 @@ void setup(){
     sched = new Scheduler();
     sched->init(BASE_PERIOD);
     /*Setup tasks*/
+    task_for_temp = new TemperatureTask(TEMPERATURE_PIN,MAX_TEMPERATURE_FOR_ERROR);
+    task_for_temp->init(BASE_PERIOD*5);
+    sched->addTask(task_for_temp);
+
     task_for_button = new ButtonsTask(OPEN_BUTTON,CLOSE_BUTTON);
     task_for_button->init(BASE_PERIOD);
     sched->addTask(task_for_button);

@@ -2,15 +2,21 @@
 #define __TEMPERATURETASK__
 
 #include "TemperatureSensor.h"
+#include "../lib/Tasks/Task.h"
 
-class TemperatureTask {
+/*Global variables (read/write)*/
+extern int tError;
+
+class TemperatureTask: public Task {
 private:
-    TemperatureSensor& tempSensor; // Riferimento al sensore
-    void (*onOverheatCallback)();  // Funzione chiamata quando si supera la temperatura massima
-
+    TemperatureSensor* tempSensor; // Riferimento al sensore
+    unsigned long maxTime; // Tempo massimo consentito sopra la soglia
+    unsigned long startTime; // Tempo iniziale sopra la soglia
+    enum {STABLE,HEATING,OVERHEATING} status;
 public:
-    TemperatureTask(TemperatureSensor& tempSensor, void (*onOverheatCallback)());
-    void run(); // Esegue il monitoraggio della temperatura
+    TemperatureTask(int pin,int maxTemp);
+    void tick();
+    void init(int period);
 };
 
 #endif
