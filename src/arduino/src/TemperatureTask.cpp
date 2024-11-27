@@ -11,7 +11,6 @@ void TemperatureTask::init(int period) {
     Task::init(period);
     startTime = 0;
     status = STABLE;
-    Serial.begin(9600);
 }
 
 void TemperatureTask::tick(){

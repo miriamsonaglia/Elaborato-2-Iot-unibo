@@ -9,8 +9,7 @@ private:
 
 public:
     SonarWaste(int trigPin, int echoPin, float threshold);
-    void init();          // Configura i pin
-    float getDistance();  // Legge la distanza attuale
+    double getDistance();  // Legge la distanza attuale
     bool isFull();        // Verifica se il contenitore è pieno
 };
 

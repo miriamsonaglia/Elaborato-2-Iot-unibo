@@ -2,26 +2,27 @@
 #include <Arduino.h>
 
 SonarWaste::SonarWaste(int trigPin, int echoPin, float threshold)
-    : trigPin(trigPin), echoPin(echoPin), threshold(threshold) {}
-
-void SonarWaste::init() {
-    pinMode(trigPin, OUTPUT);
-    pinMode(echoPin, INPUT);
+{
+    this->echoPin = echoPin;
+    this->trigPin = trigPin;
+    pinMode(trigPin,OUTPUT);
+    pinMode(echoPin,INPUT);
+    this->threshold = threshold;
 }
 
-float SonarWaste::getDistance() {
+double SonarWaste::getDistance() {
     // Genera un impulso per il sensore a ultrasuoni
     digitalWrite(trigPin, LOW);
-    delayMicroseconds(2);
+    delayMicroseconds(5);
     digitalWrite(trigPin, HIGH);
-    delayMicroseconds(10);
+    delayMicroseconds(20);
     digitalWrite(trigPin, LOW);
 
     // Misura il tempo di ritorno
     long duration = pulseIn(echoPin, HIGH);
 
     // Calcola la distanza in centimetri
-    float distance = duration * 0.034 / 2;  // Velocità del suono: 343 m/s
+    double distance = duration * 0.0343 / 2.0;  // Velocità del suono: 343 m/s
     return distance;
 }
 

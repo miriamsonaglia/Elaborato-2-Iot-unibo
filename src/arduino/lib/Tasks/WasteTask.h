@@ -2,15 +2,20 @@
 #define __WASTETASK__
 
 #include "SonarWaste.h"
+#include "../lib/Tasks/Task.h"
 
-class WasteTask {
+extern int wError;
+
+class WasteTask : public Task {
 private:
-    SonarWaste& sonarWaste;  // Riferimento al sensore
-    void (*onFullCallback)();  // Funzione da chiamare quando il contenitore è pieno
-
+    SonarWaste* sonarSensor; // Riferimento al sensore
+    enum {OPENABLE,FULL} status;
+    double last_measurment;
+    int successive_low_readings;
 public:
-    WasteTask(SonarWaste& sonarWaste, void (*onFullCallback)());
-    void run();  // Esegue il monitoraggio
+    WasteTask(int trigPin,int echoPin,double maxHeight);
+    void init(int period);
+    void tick();
 };
 
 #endif

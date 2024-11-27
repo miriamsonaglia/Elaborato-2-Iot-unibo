@@ -13,17 +13,16 @@ void DoorTask::init(int period){
 }
 
 void DoorTask::tick(){
-    //check presence of error
-    if(status != CLOSED){
-        if(wError || tError || closeDoor){
+
+    if(wError || tError){
+        emptyDoor = 0;
+        openDoor = 0;
+    }
+    else if(status != CLOSED){
+        if(closeDoor){
             status = CLOSED;
             door->close();
             closeDoor = 0;
-            //if this code was reached due to an error,all command flags must be reset
-            if(wError || tError){
-                emptyDoor = 0;
-                openDoor = 0;
-            }
         }
     }
     else{
