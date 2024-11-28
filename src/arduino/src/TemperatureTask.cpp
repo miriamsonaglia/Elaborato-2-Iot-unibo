@@ -1,7 +1,10 @@
 #include "TemperatureTask.h"
 #include <Arduino.h>
+#include "../lib/Scheduling/SharableData.h"
 
 #define MAX_TIME_HEATING 2000
+
+extern struct SharableData shareData;
 
 TemperatureTask::TemperatureTask(int pin,int maxTemp){
     tempSensor = new TemperatureSensor(pin,maxTemp);
@@ -16,6 +19,7 @@ void TemperatureTask::init(int period) {
 
 void TemperatureTask::tick(){
     int overHeat = tempSensor->isOverheated();
+    double measure = tempSensor->getTemperature();
     if(overHeat) {
             if(status == STABLE) {
                 startTime = millis();
@@ -23,13 +27,12 @@ void TemperatureTask::tick(){
             }
             else if(status == HEATING && (millis()-startTime >= MAX_TIME_HEATING)){
                 tError = 1;
-                Serial.println("Temperature error detected");
-                double x = tempSensor->getTemperature();
-                Serial.println(x);
             }
     }else{
         tError = 0;
         startTime = 0;
         status = STABLE;
     }
+    //update for java GUI
+    shareData.temperature = measure;
 }

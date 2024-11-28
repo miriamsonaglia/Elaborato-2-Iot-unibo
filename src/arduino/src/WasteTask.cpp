@@ -1,8 +1,11 @@
 #include "WasteTask.h"
+#include "../lib/Scheduling/SharableData.h"
 #include <Arduino.h>
-
 #define MARGINAL_ERROR 2
 #define MAX_ALLOWED_SUCCESSIVE_LOW_READINGS 7
+#define MAX_FREE_HEIGHT_EXPECTED 103.0
+
+extern struct SharableData shareData;
 
 WasteTask::WasteTask(int trigPin,int echoPin,double maxHeight){
     this->sonarSensor = new SonarWaste(trigPin,echoPin,maxHeight);
@@ -37,4 +40,6 @@ void WasteTask::tick(){
         }
     }
     last_measurment = measure;
+    //update fill perc.
+    shareData.fillPercentage = (last_measurment/MAX_FREE_HEIGHT_EXPECTED)*100.0;
 }

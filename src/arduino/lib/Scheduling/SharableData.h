@@ -3,7 +3,7 @@
 
 struct sharableData{
     double temperature;
-    int fillPercentage;
+    double fillPercentage;
     int doorStatus;
 }
 
