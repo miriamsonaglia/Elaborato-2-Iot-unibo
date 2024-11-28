@@ -4,6 +4,7 @@
 #include "../lib/Tasks/TemperatureTask.h"
 #include "../lib/Tasks/WasteTask.h"
 #include "../lib/Tasks/MotionTask.h"
+#include "../lib/Tasks/LcdTask.h"
 #include "../lib/Scheduling/Scheduler.h"
 
 #include <Arduino.h>
@@ -18,6 +19,10 @@
 #define TEMPERATURE_PIN A0
 #define MOVEMENT_PIN 8
 
+#define LCDADDRESS 0x27
+#define LCDCOLS 20
+#define LCDROWS 4
+
 #define BASE_PERIOD 50
 #define MAX_TEMPERATURE_FOR_ERROR 40.0
 #define MIN_HEIGHT_ACCEPTED 10.0
@@ -31,6 +36,7 @@ ButtonsTask* task_for_button;
 TemperatureTask* task_for_temp;
 WasteTask * task_for_waste;
 MotionTask* task_for_motion;
+LcdTask* task_for_lcd;
 
 /*Global variables*/
 int wError = 0;         //flag variable,checks if waste bin is full
@@ -67,6 +73,10 @@ void setup(){
     task_for_door = new DoorTask(DOOR_PIN);
     task_for_door->init(BASE_PERIOD*2);
     sched->addTask(task_for_door);
+
+    task_for_lcd = new LcdTask(LCDADDRESS, LCDCOLS, LCDROWS);
+    task_for_lcd->init(BASE_PERIOD*6);
+    sched->addTask(task_for_lcd);
     
 }
 
