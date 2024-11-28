@@ -1,13 +1,14 @@
 #ifndef __BUTTON__
 #define __BUTTON__
 
-#include "DigitallyReadableDevice.h"
 
-class Button:public DigitallyReadableDevice{
+class Button{
 public:
   Button(int pin);
   bool isPressed();
   bool hasStatusSwitched();
+private:
+  int pin;
 };
 
 #endif

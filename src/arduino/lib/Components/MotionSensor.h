@@ -1,9 +1,8 @@
 #ifndef __MOTIONSENSOR__
 #define __MOTIONSENSOR__
 
-#include "DigitallyReadableDevice.h"
 
-class MotionSensor : public DigitallyReadableDevice {
+class MotionSensor {
 public:
   MotionSensor(int pin);
   bool movementDetected();

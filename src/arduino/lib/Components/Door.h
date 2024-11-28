@@ -2,7 +2,7 @@
 #define __DOOR__
 #include <Servo.h>
 
-#include "DigitallyReadableDevice.h"
+
 
 class Door{
 public:

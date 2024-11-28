@@ -9,16 +9,15 @@ WasteTask::WasteTask(int trigPin,int echoPin,double maxHeight){
 }
 
 void WasteTask::init(int period){
+    Serial.begin(9600);
     Task::init(period);
     last_measurment = -1.0;
     status = OPENABLE;
-    Serial.begin(9600);
     successive_low_readings = 0;
 }
 
 void WasteTask::tick(){
     double measure = sonarSensor->getDistance();
-    Serial.println(measure);
 
     if(last_measurment!=-1.0){
         //if lower height found,bin is being emptied,do not run errors
@@ -27,7 +26,8 @@ void WasteTask::tick(){
             if(successive_low_readings>MAX_ALLOWED_SUCCESSIVE_LOW_READINGS){
                 status = FULL;
                 wError = 1;
-            }     
+                Serial.println("Bin error detected");
+            }
         }
         else
         {

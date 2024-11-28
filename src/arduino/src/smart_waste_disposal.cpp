@@ -3,6 +3,7 @@
 #include "../lib/Tasks/ButtonsTask.h"
 #include "../lib/Tasks/TemperatureTask.h"
 #include "../lib/Tasks/WasteTask.h"
+#include "../lib/Tasks/MotionTask.h"
 #include "../lib/Scheduling/Scheduler.h"
 
 #include <Arduino.h>
@@ -15,9 +16,12 @@
 #define OPEN_BUTTON 2
 #define CLOSE_BUTTON 4
 #define TEMPERATURE_PIN A0
+#define MOVEMENT_PIN 8
+
 #define BASE_PERIOD 50
-#define MAX_TEMPERATURE_FOR_ERROR 23.0
+#define MAX_TEMPERATURE_FOR_ERROR 40.0
 #define MIN_HEIGHT_ACCEPTED 10.0
+#define MAX_INACTIVITY_TIME 10
 
 /*Scheduler + task definition*/
 LedTask* task_for_leds;
@@ -26,6 +30,7 @@ DoorTask* task_for_door;
 ButtonsTask* task_for_button;
 TemperatureTask* task_for_temp;
 WasteTask * task_for_waste;
+MotionTask* task_for_motion;
 
 /*Global variables*/
 int wError = 0;         //flag variable,checks if waste bin is full
@@ -46,6 +51,10 @@ void setup(){
     task_for_waste = new WasteTask(TRIG_PIN,ECHO_PIN,MIN_HEIGHT_ACCEPTED);
     task_for_waste->init(BASE_PERIOD*2);
     sched->addTask(task_for_waste);
+
+    task_for_motion = new MotionTask(MOVEMENT_PIN,MAX_INACTIVITY_TIME);
+    task_for_motion->init(BASE_PERIOD*2);
+    sched->addTask(task_for_motion);
 
     task_for_button = new ButtonsTask(OPEN_BUTTON,CLOSE_BUTTON);
     task_for_button->init(BASE_PERIOD);

@@ -8,9 +8,9 @@ Led::Led(int pin){
 }
 
 void Led::switchOn(){
-  DigitallyWritableDevice::setValue(HIGH);
+  digitalWrite(pin,HIGH);
 }
 
 void Led::switchOff(){
-  DigitallyWritableDevice::setValue(LOW);
+  digitalWrite(pin,LOW);
 };

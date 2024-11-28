@@ -2,19 +2,20 @@
 #define __MOTION_TASK__
 
 #include "Task.h"
-#include "MotionSensor.h";
+#include "MotionSensor.h"
 
 //global variables (write)
 extern int sleep_mode;
 
 class MotionTask : public Task{
     public:
-        MotionTask(int pin);
+        MotionTask(int pin,int maxInactiveTime);
         void tick();
         void init(int period);
     private:
-        int sleep_mode_counter;
+        unsigned long sleep_mode_counter;
         int sensor_pin;
+        unsigned long maxInactiveTime;
         MotionSensor* sensor;
         enum {MOVING,PENDING_SLEEP,SLEEP} status;
 };

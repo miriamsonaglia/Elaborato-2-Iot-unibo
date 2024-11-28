@@ -11,20 +11,22 @@ void TemperatureTask::init(int period) {
     Task::init(period);
     startTime = 0;
     status = STABLE;
+    Serial.begin(9600);
 }
 
 void TemperatureTask::tick(){
     int overHeat = tempSensor->isOverheated();
     if(overHeat) {
-        if(status!=OVERHEATING){
             if(status == STABLE) {
                 startTime = millis();
                 status = HEATING;
             }
-            else if(millis()-startTime >= MAX_TIME_HEATING){
+            else if(status == HEATING && (millis()-startTime >= MAX_TIME_HEATING)){
                 tError = 1;
+                Serial.println("Temperature error detected");
+                double x = tempSensor->getTemperature();
+                Serial.println(x);
             }
-        }
     }else{
         tError = 0;
         startTime = 0;

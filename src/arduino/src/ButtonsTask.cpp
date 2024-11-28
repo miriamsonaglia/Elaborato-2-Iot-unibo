@@ -1,5 +1,6 @@
 #include "../lib/Tasks/ButtonsTask.h"
 #include "../lib/Components/Button.h"
+#include <Arduino.h> 
 
 #define ALLOWED_TICKS_FOR_COMMAND_RESOLUTIONS 20
 
