@@ -9,6 +9,7 @@ extern int openDoor;
 extern int closeDoor;
 //global variables (read)
 extern int emptyDoor;
+extern int sleep_mode;
 
 class ButtonsTask: public Task{
     public:

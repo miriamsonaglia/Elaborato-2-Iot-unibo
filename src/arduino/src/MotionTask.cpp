@@ -24,7 +24,6 @@ void MotionTask::tick(){
         Serial.println("Movement detected");
     }
     else{
-        Serial.println("Porco dio");
         if(status == MOVING){
             Serial.println("No activity detected,system will go to sleep mode in 10 seconds");
             status = PENDING_SLEEP;

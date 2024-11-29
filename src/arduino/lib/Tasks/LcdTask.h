@@ -12,6 +12,7 @@ public:
   void init(int period);
 private:
   Lcd* lcd;
+  unsigned long timerDelay;
   const char* currentMsg;
 };
 

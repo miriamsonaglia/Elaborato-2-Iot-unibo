@@ -1,3 +1,4 @@
+/*
 #include "../lib/Tasks/SerialTask.h"
 #include "../lib/Scheduling/SharableData.h"
 
@@ -32,3 +33,4 @@ void SerialTask::tick(){
     handler->tryWrite(statusMessage);
 
 }
+*/

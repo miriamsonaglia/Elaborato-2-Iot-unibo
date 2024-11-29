@@ -1,5 +1,5 @@
 #include "../Tasks/LcdTask.h"
-
+#include <Arduino.h>
 
 LcdTask::LcdTask(int address, int cols, int rows){
     this->lcd = new Lcd(address, cols, rows);
@@ -8,6 +8,7 @@ LcdTask::LcdTask(int address, int cols, int rows){
 
 void LcdTask::init(int period){
     Task::init(period);
+    timerDelay = 0;
     lcd->init();
 }
 
@@ -16,6 +17,9 @@ void LcdTask::updateMsg(const char* msg){
 }
 
 void LcdTask::tick(){
+
+    timerDelay = millis();
+
     if(sleep_mode){
         lcd->close();
     }else if(tError){
@@ -28,7 +32,9 @@ void LcdTask::tick(){
         lcd->message("PRESS CLOSE WHEN DONE");
 
     }else if(closeDoor){
-
+        if(millis()-timerDelay>=5){
+            lcd->message("WASTE RECIEVED"); 
+        }
 
     }else if(emptyDoor){
         

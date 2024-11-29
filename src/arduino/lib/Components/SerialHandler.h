@@ -1,3 +1,4 @@
+/*
 #ifndef __SERIALHANDLER__
 #define __SERIALHANDLER__
 
@@ -15,3 +16,4 @@ public:
 
 
 #endif
+*/

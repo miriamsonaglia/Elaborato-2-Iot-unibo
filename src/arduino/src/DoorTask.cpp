@@ -17,6 +17,11 @@ void DoorTask::tick(){
     if(wError || tError){
         emptyDoor = 0;
         openDoor = 0;
+        if(status != CLOSED){
+            status = CLOSED;
+            door->close();
+            closeDoor = 0;
+        }
     }
     else if(status != CLOSED){
         if(closeDoor){

@@ -19,29 +19,31 @@ void ButtonsTask::init(int period){
 }
 
 void ButtonsTask::tick(){
-    if(status == NO_COMMAND){
-        if(open_button->isPressed() && !close_button->isPressed()){
-            status = OPEN_PENDING;
-            closeDoor = 0;
-            openDoor = 1;
+    if(!sleep_mode){
+        if(status == NO_COMMAND){
+            if(open_button->isPressed() && !close_button->isPressed()){
+                status = OPEN_PENDING;
+                closeDoor = 0;
+                openDoor = 1;
+            }
+            else if(!open_button->isPressed() && close_button->isPressed()){
+                status = CLOSE_PENDING;
+                closeDoor = 1;
+                openDoor = 0;
+            }
         }
-        else if(!open_button->isPressed() && close_button->isPressed()){
-            status = CLOSE_PENDING;
-            closeDoor = 1;
-            openDoor = 0;
-        }
-    }
-    else if(!(emptyDoor | openDoor | closeDoor)){
-        status = NO_COMMAND;
-        ticks_elapsed = 0;
-    }
-    else{
-        ticks_elapsed++;
-        if(ticks_elapsed>=ALLOWED_TICKS_FOR_COMMAND_RESOLUTIONS){
-            ticks_elapsed = 0;
+        else if(!(emptyDoor | openDoor | closeDoor)){
             status = NO_COMMAND;
-            closeDoor = 0;
-            openDoor = 0;
+            ticks_elapsed = 0;
+        }
+        else{
+            ticks_elapsed++;
+            if(ticks_elapsed>=ALLOWED_TICKS_FOR_COMMAND_RESOLUTIONS){
+                ticks_elapsed = 0;
+                status = NO_COMMAND;
+                closeDoor = 0;
+                openDoor = 0;
+            }
         }
     }
 }

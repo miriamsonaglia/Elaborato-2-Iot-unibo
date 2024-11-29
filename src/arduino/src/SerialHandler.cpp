@@ -1,4 +1,4 @@
-#include "../lib/Components/SerialHandler.h"
+/*#include "../lib/Components/SerialHandler.h"
 
 #define MAX_BUFFER_SIZE 64
 
@@ -19,3 +19,4 @@ int SerialHandler::tryWrite(char* message){
     Serial.println(message);
     return 1;
 }
+*/
