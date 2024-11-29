@@ -12,6 +12,6 @@ class SerialTask: public Task{
     private:
         char* buffer;
         SerialHandler* handler;
-}
+};
 
 #endif

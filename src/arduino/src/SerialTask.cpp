@@ -1,19 +1,19 @@
 #include "../lib/Tasks/SerialTask.h"
 #include "../lib/Scheduling/SharableData.h"
 
-extern struct sharableData shareData;
+extern struct SharableData shareData;
 #define MAX_BUFFER_SIZE 64
 
 SerialTask::SerialTask(){
-    SerialHandler = new SerialHandler();
+    handler = new SerialHandler();
     buffer = (char*)(malloc(MAX_BUFFER_SIZE));
 }
 
-SerialTask::init(int period){
+void SerialTask::init(int period){
     Task::init(period);
 }
 
-SerialTask::tick(){
+void SerialTask::tick(){
     //read possible commands from java GUI
     int success = handler->tryRead(buffer);
     if(success){
@@ -26,5 +26,9 @@ SerialTask::tick(){
         }
     }
     //send data to java GUI (temperature,percentage fill ecc...)
-    handler->tryWrite(std::format("STATUS: Filling:{}% Temperature:{}°C",shareData.fillPercentage,shareData.temperature));
+    //handler->tryWrite(std::format("STATUS: Filling:{}% Temperature:{}°C",shareData.fillPercentage,shareData.temperature));
+    char statusMessage[128]; // Buffer per il messaggio formattato
+    sprintf(statusMessage, "STATUS: Filling:%d%% Temperature:%u°C", shareData.fillPercentage, shareData.temperature);
+    handler->tryWrite(statusMessage);
+
 }
