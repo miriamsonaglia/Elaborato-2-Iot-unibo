@@ -10,6 +10,7 @@ extern int openDoor;
 extern int closeDoor;
 extern int emptyDoor;
 extern int sleep_mode;
+extern int doorStatus;
 
 class Lcd{
 public:

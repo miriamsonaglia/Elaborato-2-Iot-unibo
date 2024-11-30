@@ -1,4 +1,4 @@
-/*
+
 #ifndef __SHARABLEDATA__
 #define __SHARABLEDATA__
 
@@ -9,4 +9,3 @@ struct SharableData{
 };
 
 #endif
-*/

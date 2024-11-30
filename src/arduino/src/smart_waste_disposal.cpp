@@ -6,6 +6,7 @@
 #include "../lib/Tasks/MotionTask.h"
 #include "../lib/Tasks/LcdTask.h"
 #include "../lib/Scheduling/Scheduler.h"
+#include "../lib/Scheduling/SharableData.h"
 
 #include <Arduino.h>
 
@@ -31,6 +32,7 @@
 /*Scheduler + task definition*/
 LedTask* task_for_leds;
 Scheduler* sched;
+SharableData* data;
 DoorTask* task_for_door;
 ButtonsTask* task_for_button;
 TemperatureTask* task_for_temp;
@@ -45,9 +47,11 @@ int openDoor  = 0;      //flag command, if set to 1 indicates that the door shou
 int closeDoor = 0;      //flag command, if set to 1 indicates that the door should become closed
 int emptyDoor = 0;      //flag command, if set to 1 indicates that the door should be in a -90 degree position to empty the waste bin,this flag should always take priority over open and close flags.
 int sleep_mode = 0;     //flag variable,if set to 1 indicates that the system is in sleep mode,the LCD should be turned off and the leds freezed.
+int doorStatus = 0;
 
 void setup(){
     sched = new Scheduler();
+    data = new SharableData();
     sched->init(BASE_PERIOD);
     /*Setup tasks*/
     task_for_temp = new TemperatureTask(TEMPERATURE_PIN,MAX_TEMPERATURE_FOR_ERROR);

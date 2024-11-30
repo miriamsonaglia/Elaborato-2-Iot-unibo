@@ -13,6 +13,7 @@ public:
 private:
   Lcd* lcd;
   unsigned long timerDelay;
+  int timerOn;
   const char* currentMsg;
 };
 
