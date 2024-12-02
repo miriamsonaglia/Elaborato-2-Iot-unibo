@@ -13,11 +13,12 @@ void MotionTask::init(int period){
     sensor = new MotionSensor(sensor_pin);
     sleep_mode_counter = 0;
     status = MOVING;
+    errorControll = 0;
     Serial.begin(9600);
 }
 
 void MotionTask::tick(){
-    if(wError || tError || openDoor || closeDoor){
+        if(openDoor || closeDoor){
             if(sleep_mode != 1){
                 sleep_mode = 0;
                 sleep_mode_counter = 0;

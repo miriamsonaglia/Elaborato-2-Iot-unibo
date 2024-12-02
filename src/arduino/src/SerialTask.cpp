@@ -1,4 +1,3 @@
-/*
 #include "../lib/Tasks/SerialTask.h"
 #include "../lib/Scheduling/SharableData.h"
 
@@ -12,6 +11,7 @@ SerialTask::SerialTask(){
 
 void SerialTask::init(int period){
     Task::init(period);
+    Serial.begin(9600);
 }
 
 void SerialTask::tick(){
@@ -20,6 +20,7 @@ void SerialTask::tick(){
     if(success){
         if (strcmp(buffer,"EMPTY")==0) {
             // Simula svuotamento del contenitore
+            doorStatus = -1;
             Serial.println("Container emptied");
         } else if (strcmp(buffer,"RESTORE")==0) {
             // Simula ripristino
@@ -28,9 +29,9 @@ void SerialTask::tick(){
     }
     //send data to java GUI (temperature,percentage fill ecc...)
     //handler->tryWrite(std::format("STATUS: Filling:{}% Temperature:{}°C",shareData.fillPercentage,shareData.temperature));
-    char statusMessage[128]; // Buffer per il messaggio formattato
-    sprintf(statusMessage, "STATUS: Filling:%d%% Temperature:%u°C", shareData.fillPercentage, shareData.temperature);
-    handler->tryWrite(statusMessage);
+    char statusMessage[1024]; // Buffer per il messaggio formattato
+    sprintf(statusMessage, "STATUS:Filling:%f%% Temperature:%f%%°C", shareData.fillPercentage, shareData.temperature);
+    handler->tryWrite("STATUS:Filling:30% Temperature:15°C\n");
+    Serial.println(statusMessage);
 
 }
-*/

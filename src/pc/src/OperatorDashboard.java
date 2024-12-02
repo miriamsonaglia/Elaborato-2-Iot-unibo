@@ -34,13 +34,13 @@ public class OperatorDashboard {
 
         // Etichette e valori di stato          I VALORI VANNO LETTI, ME LI DA ARDUINO TRAMITE IL THREAD
         JLabel wasteLevelLabel = new JLabel("Filling Percentage:");
-        JLabel wasteLevelValue = new JLabel("0%");
+        JLabel wasteLevelValue = new JLabel("0%");      //VA LETTO
 
         JLabel temperatureLabel = new JLabel("Temperature:");
-        JLabel temperatureValue = new JLabel("22°C");
+        JLabel temperatureValue = new JLabel("22°C");   //VA LETTO
 
         JLabel statusLabel = new JLabel("Status:");
-        JLabel statusValue = new JLabel("Available");
+        JLabel statusValue = new JLabel("Available");   //VA LETTO
         
         // Aggiungo le etichette al Panel
         statusPanel.add(wasteLevelLabel);
@@ -107,7 +107,7 @@ public class OperatorDashboard {
                                     temperatureValue.setText(part.split(":")[1]);
                                 }
                             }
-                            // Aggiorno lo stato del container in base al pulsante che ho premuto
+                        // Aggiorno lo stato del container in base al pulsante che ho premuto
                         } else if (data.equals("Container emptied")) {
                             statusValue.setText("Available");
                             wasteLevelValue.setText("0%");

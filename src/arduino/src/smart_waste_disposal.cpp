@@ -49,7 +49,12 @@ int emptyDoor = 0;      //flag command, if set to 1 indicates that the door shou
 int sleep_mode = 0;     //flag variable,if set to 1 indicates that the system is in sleep mode,the LCD should be turned off and the leds freezed.
 int doorStatus = 0;
 
+SharableData shareData;
+
 void setup(){
+    shareData.doorStatus=0;
+    shareData.fillPercentage =0;
+    shareData.temperature =0;
     sched = new Scheduler();
     data = new SharableData();
     sched->init(BASE_PERIOD);

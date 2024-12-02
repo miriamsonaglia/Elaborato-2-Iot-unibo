@@ -4,7 +4,7 @@
 
 #define MAX_TIME_HEATING 2000
 
-/*extern struct SharableData shareData;*/
+extern struct SharableData shareData;
 
 TemperatureTask::TemperatureTask(int pin,int maxTemp){
     tempSensor = new TemperatureSensor(pin,maxTemp);
@@ -34,5 +34,5 @@ void TemperatureTask::tick(){
         status = STABLE;
     }
     //update for java GUI
-    /*shareData.temperature = measure;*/
+    shareData.temperature = measure;
 }

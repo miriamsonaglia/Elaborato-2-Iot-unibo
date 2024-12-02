@@ -40,7 +40,6 @@ void LcdTask::tick(){
         if(millis() - timerDelay <= 3000){
             lcd->message("PRESS CLOSE WHEN DONE");
         }else{
-            doorStatus = 0;
             closeDoor = 1;
             timerDelay = millis();
         }
@@ -53,7 +52,12 @@ void LcdTask::tick(){
         }
         Serial.println("entra nel close door");
 
-    }else if(emptyDoor){
+    }else if(doorStatus == -1 && timerDelay !=0){
+        if(millis() - timerDelay <= 3000){
+        }else{
+            emptyDoor = 1;
+            timerDelay = millis();
+        }
         
 
     }else if(timerOn){

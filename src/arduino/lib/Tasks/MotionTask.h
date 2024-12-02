@@ -15,6 +15,7 @@ class MotionTask : public Task{
     private:
         unsigned long sleep_mode_counter;
         int sensor_pin;
+        int errorControll;
         unsigned long maxInactiveTime;
         MotionSensor* sensor;
         enum {MOVING,PENDING_SLEEP,SLEEP} status;

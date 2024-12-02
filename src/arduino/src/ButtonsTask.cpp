@@ -25,11 +25,14 @@ void ButtonsTask::tick(){
                 status = OPEN_PENDING;
                 closeDoor = 0;
                 openDoor = 1;
+                doorStatus = 1;
+                
             }
             else if(!open_button->isPressed() && close_button->isPressed()){
                 status = CLOSE_PENDING;
                 closeDoor = 1;
                 openDoor = 0;
+                doorStatus = 0;
             }
         }
         else if(!(emptyDoor | openDoor | closeDoor)){
