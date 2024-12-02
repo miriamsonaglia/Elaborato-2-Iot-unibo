@@ -41,8 +41,7 @@ void LcdTask::tick(){
             lcd->message("PRESS CLOSE WHEN DONE");
         }else{
             closeDoor = 1;
-            timerDelay = millis();
-        }
+            timerDelay = millis();        }
 
     }else if(doorStatus == 0 && timerDelay != 0){
         if(millis() - timerDelay <= 3000){
