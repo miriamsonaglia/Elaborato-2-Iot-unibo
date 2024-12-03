@@ -15,7 +15,6 @@ void ButtonsTask::init(int period){
     open_button = new Button(open_button_pin);
     close_button = new Button(close_button_pin);
     status =NO_COMMAND;
-    Serial.begin(9600);
 }
 
 void ButtonsTask::tick(){

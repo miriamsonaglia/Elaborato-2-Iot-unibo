@@ -12,6 +12,9 @@ public:
     SerialHandler();
     int tryRead(char* reader);
     int tryWrite(char* message);
+    int tryWrite(double message);
+    int tryWrite(int message);
+    int tryWriteLine(char* message);
 };
 
 

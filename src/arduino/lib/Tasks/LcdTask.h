@@ -15,6 +15,7 @@ private:
   unsigned long timerDelay;
   int timerOn;
   const char* currentMsg;
+  long long previous_door_status;
 };
 
 #endif

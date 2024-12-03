@@ -21,6 +21,7 @@ private:
   int pin;
   Door* door;
   enum{CLOSED,OPEN,EMPTYING} status;
+  long long emptyingTimer;
 };
 
 #endif

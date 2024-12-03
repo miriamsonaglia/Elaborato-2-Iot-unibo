@@ -14,26 +14,22 @@ void MotionTask::init(int period){
     sleep_mode_counter = 0;
     status = MOVING;
     errorControll = 0;
-    Serial.begin(9600);
 }
 
 void MotionTask::tick(){
         if(openDoor || closeDoor){
-            if(sleep_mode != 1){
+            if(status!=MOVING){
                 sleep_mode = 0;
                 sleep_mode_counter = 0;
                 status = MOVING;
-                Serial.println("Movement detected");
             }
         }else if(sensor->movementDetected()){
             sleep_mode = 0;
             sleep_mode_counter = 0;
             status = MOVING;
-            Serial.println("Movement detected");
         }else
         {
             if(status == MOVING){
-                Serial.println("No activity detected,system will go to sleep mode in 10 seconds");
                 status = PENDING_SLEEP;
                 sleep_mode_counter = millis();
             }
@@ -41,7 +37,6 @@ void MotionTask::tick(){
                 if(millis()-sleep_mode_counter>=maxInactiveTime){
                     status = SLEEP;
                     sleep_mode = 1;
-                    Serial.println("Moving to sleep mode");
                 }
             }
         }

@@ -5,6 +5,7 @@
 #include "../lib/Tasks/WasteTask.h"
 #include "../lib/Tasks/MotionTask.h"
 #include "../lib/Tasks/LcdTask.h"
+#include "../lib/Tasks/SerialTask.h"
 #include "../lib/Scheduling/Scheduler.h"
 #include "../lib/Scheduling/SharableData.h"
 
@@ -25,38 +26,37 @@
 #define LCDROWS 4
 
 #define BASE_PERIOD 50
-#define MAX_TEMPERATURE_FOR_ERROR 40.0
+#define MAX_TEMPERATURE_FOR_ERROR 28.0
 #define MIN_HEIGHT_ACCEPTED 10.0
 #define MAX_INACTIVITY_TIME 10
 
 /*Scheduler + task definition*/
 LedTask* task_for_leds;
 Scheduler* sched;
-SharableData* data;
+SharableData shareData;
 DoorTask* task_for_door;
 ButtonsTask* task_for_button;
 TemperatureTask* task_for_temp;
 WasteTask * task_for_waste;
 MotionTask* task_for_motion;
 LcdTask* task_for_lcd;
+SerialTask* task_for_serial;
 
 /*Global variables*/
 int wError = 0;         //flag variable,checks if waste bin is full
 int tError = 0;         //flag variable,checks if there is a temperature problem
+int ignoreTempError = 0; //flag variable,checks if temperature errors should be considered,gets set to 
 int openDoor  = 0;      //flag command, if set to 1 indicates that the door should become open
 int closeDoor = 0;      //flag command, if set to 1 indicates that the door should become closed
 int emptyDoor = 0;      //flag command, if set to 1 indicates that the door should be in a -90 degree position to empty the waste bin,this flag should always take priority over open and close flags.
 int sleep_mode = 0;     //flag variable,if set to 1 indicates that the system is in sleep mode,the LCD should be turned off and the leds freezed.
 int doorStatus = 0;
 
-SharableData shareData;
-
 void setup(){
-    shareData.doorStatus=0;
-    shareData.fillPercentage =0;
-    shareData.temperature =0;
     sched = new Scheduler();
-    data = new SharableData();
+    shareData.doorStatus=0;
+    shareData.fillPercentage = 0.0;
+    shareData.temperature = 1.0;
     sched->init(BASE_PERIOD);
     /*Setup tasks*/
     task_for_temp = new TemperatureTask(TEMPERATURE_PIN,MAX_TEMPERATURE_FOR_ERROR);
@@ -75,6 +75,10 @@ void setup(){
     task_for_button->init(BASE_PERIOD);
     sched->addTask(task_for_button);
 
+    task_for_serial = new SerialTask();
+    task_for_serial->init(BASE_PERIOD*5);
+    sched->addTask(task_for_serial);
+
     task_for_leds = new LedTask(GREEN_LED_PIN,RED_LED_PIN);
     task_for_leds->init(BASE_PERIOD*3);
     sched->addTask(task_for_leds);
@@ -84,9 +88,8 @@ void setup(){
     sched->addTask(task_for_door);
 
     task_for_lcd = new LcdTask(LCDADDRESS, LCDCOLS, LCDROWS);
-    task_for_lcd->init(BASE_PERIOD*6);
+    task_for_lcd->init(BASE_PERIOD*2);
     sched->addTask(task_for_lcd);
-    
 }
 
 void loop(){

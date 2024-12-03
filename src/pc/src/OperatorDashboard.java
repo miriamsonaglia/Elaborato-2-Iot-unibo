@@ -5,6 +5,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Scanner;
 
 public class OperatorDashboard {
 
@@ -73,7 +77,9 @@ public class OperatorDashboard {
         restoreButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (serialPort.isOpen()) {
+                if (serialPort.isOpen()) {      // Controllo se la seriale è aperta
+                    // Invia la stringa "EMPTY" come comando alla seriale,
+                    // Arduino deve leggere iol comando e reagire di conseguenza
                     serialPort.writeBytes("RESTORE\n".getBytes(), "RESTORE\n".length());
                 }
             }
@@ -90,11 +96,14 @@ public class OperatorDashboard {
         // Thread per ricevere i dati dalla seriale
         // Legge continuamente i dati ricevuti dall'Arduino tramite la seriale
         Thread readThread = new Thread(() -> {
-            byte[] buffer = new byte[1024];  // Definisco un area di memoria per memorizzare i dati
             while (serialPort.isOpen()) {
-                int bytesRead = serialPort.readBytes(buffer, buffer.length); // Legge i dati disponibili e li salva nel buffer
-                if (bytesRead > 0) {    // Se il numero di bytes letti > 0, li converte in una Stringa
-                    String data = new String(buffer, 0, bytesRead).trim();
+                Scanner portInput = new Scanner(serialPort.getInputStream());
+                String input ="";
+                if(portInput.hasNextLine()){
+                    input = portInput.nextLine();
+                }
+                if (true) {    // Se il numero di bytes letti > 0, li converte in una Stringa
+                    String data = input;
                     // Aggiorno lo stato del container in tempo reale
                     SwingUtilities.invokeLater(() -> {
                         if (data.startsWith("STATUS:")) {
@@ -106,6 +115,9 @@ public class OperatorDashboard {
                                 } else if (part.startsWith("Temperature:")) {
                                     temperatureValue.setText(part.split(":")[1]);
                                 }
+                                else if(part.startsWith("Status:")){
+                                    statusValue.setText(part.split(":")[1]);
+                                }
                             }
                         // Aggiorno lo stato del container in base al pulsante che ho premuto
                         } else if (data.equals("Container emptied")) {
@@ -115,6 +127,12 @@ public class OperatorDashboard {
                             statusValue.setText("Available");
                         }
                     });
+                }
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
                 }
             }
         });

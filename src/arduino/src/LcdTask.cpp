@@ -1,7 +1,11 @@
 #include "../Tasks/LcdTask.h"
 #include <Arduino.h>
+#include "../lib/Scheduling/SharableData.h"
 
-extern struct SharableData shareData;
+#define TIMER_WASTE_RECIVED_MESSAGE 3000
+
+extern SharableData shareData;
+enum doorStatus {CLOSED,OPEN,EMPTYING};
 
 LcdTask::LcdTask(int address, int cols, int rows){
     this->lcd = new Lcd(address, cols, rows);
@@ -12,8 +16,8 @@ void LcdTask::init(int period){
     Task::init(period);
     timerDelay = 0;
     lcd->init();
-    Serial.begin(9600);
     timerOn = 0;
+    previous_door_status = shareData.doorStatus;
 }
 
 void LcdTask::updateMsg(const char* msg){
@@ -34,38 +38,31 @@ void LcdTask::tick(){
         doorStatus = 0;
         timerDelay = 0;
 
-    }else if(openDoor){
+    }
+    else if(shareData.doorStatus == (int)OPEN)
+    {
+        lcd->message("PRESS CLOSE WHEN DONE");
+        timerDelay = 0;
+    }
+    else if(previous_door_status==(int)OPEN && shareData.doorStatus==(int)CLOSED)
+    {
         timerDelay = millis();
-    }else if(doorStatus == 1 && timerDelay !=0){
-        if(millis() - timerDelay <= 3000){
-            lcd->message("PRESS CLOSE WHEN DONE");
-        }else{
-            closeDoor = 1;
-            timerDelay = millis();        }
-
-    }else if(doorStatus == 0 && timerDelay != 0){
-        if(millis() - timerDelay <= 3000){
-            lcd->message("WASTE RECEIVED");
-        }else{
+    }
+    else if(timerDelay !=0)
+    {
+        if(millis() - timerDelay >= TIMER_WASTE_RECIVED_MESSAGE)
+        {
             timerDelay = 0;
         }
-        Serial.println("entra nel close door");
-
-    }else if(doorStatus == -1 && timerDelay !=0){
-        if(millis() - timerDelay <= 3000){
-        }else{
-            emptyDoor = 1;
-            timerDelay = millis();
+        else
+        {
+            lcd->message("WASTE RECEIVED");
         }
-        
-
-    }else if(timerOn){
-
     }
     else
     {
         lcd->message("PRESS OPEN TO ENTER WASTE");
         timerDelay = 0;
     }
-    
+    previous_door_status = shareData.doorStatus;
 }
