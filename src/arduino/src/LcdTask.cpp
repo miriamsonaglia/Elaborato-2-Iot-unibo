@@ -25,14 +25,14 @@ void LcdTask::updateMsg(const char* msg){
 }
 
 void LcdTask::tick(){
-    if(sleep_mode){
+    if(shareData.sleep_mode){
         lcd->close();
         timerDelay = 0;
-    }else if(tError){
+    }else if(shareData.tError){
         lcd->message("PROBLEM DETECTED");
         timerDelay = 0;
 
-    }else if(wError){
+    }else if(shareData.wError){
         lcd->message("CONTAINER IS FULL");
         timerDelay = 0;
     }

@@ -22,22 +22,21 @@ void TemperatureTask::tick(){
     double measure = tempSensor->getTemperature();
 
     if(!overHeat){
-        ignoreTempError = 0;
-        tError = 0;
+        shareData.ignoreTempError = 0;
+        shareData.tError = 0;
         status = STABLE;
     }
 
-    if(overHeat && !ignoreTempError) {
+    if(overHeat && !shareData.ignoreTempError) {
             if(status == STABLE) {
                 startTime = millis();
                 status = HEATING;
             }
             else if(status == HEATING && (millis()-startTime >= MAX_TIME_HEATING)){
-                tError = 1;
-                status = OVERHEATING;
+                shareData.tError = 1;
             }
     }else{
-        tError = 0;
+        shareData.tError = 0;
         startTime = 0;
         status = STABLE;
     }

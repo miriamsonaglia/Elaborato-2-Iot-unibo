@@ -25,45 +25,43 @@ void DoorTask::tick(){
             door->close();
             emptyingTimer = 0;
         }
-        emptyDoor = 0;
+        shareData.emptyDoor = 0;
     }
-    else if(wError || tError){
-        openDoor = 0;
+    else if(shareData.wError || shareData.tError){
+        shareData.openDoor = 0;
         if(status == OPEN){
             status = CLOSED;
-            doorStatus = 0;
             door->close();
-            closeDoor = 0;
+            shareData.closeDoor = 0;
         }
-        else if(emptyDoor){
+        else if(shareData.emptyDoor){
             if(status == CLOSED){
                 door->empty();
                 status = EMPTYING;
-                doorStatus = -1;
                 emptyingTimer = millis();
             }
-            emptyDoor = 0;
+            shareData.emptyDoor = 0;
         }
 
     }
     else if(status == OPEN){
-        emptyDoor = 0;
-        if(closeDoor || (millis()-emptyingTimer>TIME_FOR_OPENING)){
+        shareData.emptyDoor = 0;
+        if(shareData.closeDoor || (millis()-emptyingTimer>TIME_FOR_OPENING)){
             status = CLOSED;
             door->close();
-            closeDoor = 0;
+            shareData.closeDoor = 0;
             emptyingTimer = 0;
         }
     }
     else{
-        emptyDoor = 0;
-        if(openDoor){
+        shareData.emptyDoor = 0;
+        if(shareData.openDoor){
             if(status==CLOSED){
                 door->open();
                 status = OPEN;
                 emptyingTimer = millis();
             }
-            openDoor = 0;
+            shareData.openDoor = 0;
         }
     }
     shareData.doorStatus = (int)status;

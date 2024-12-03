@@ -4,13 +4,6 @@
 #include "Task.h"
 #include "Button.h"
 
-//global variables (read/write)
-extern int openDoor;
-extern int closeDoor;
-//global variables (read)
-extern int emptyDoor;
-extern int sleep_mode;
-
 class ButtonsTask: public Task{
     public:
         ButtonsTask(int open,int close);

@@ -26,7 +26,7 @@
 #define LCDROWS 4
 
 #define BASE_PERIOD 50
-#define MAX_TEMPERATURE_FOR_ERROR 28.0
+#define MAX_TEMPERATURE_FOR_ERROR 50.0
 #define MIN_HEIGHT_ACCEPTED 10.0
 #define MAX_INACTIVITY_TIME 10
 
@@ -42,21 +42,21 @@ MotionTask* task_for_motion;
 LcdTask* task_for_lcd;
 SerialTask* task_for_serial;
 
-/*Global variables*/
-int wError = 0;         //flag variable,checks if waste bin is full
-int tError = 0;         //flag variable,checks if there is a temperature problem
-int ignoreTempError = 0; //flag variable,checks if temperature errors should be considered,gets set to 
-int openDoor  = 0;      //flag command, if set to 1 indicates that the door should become open
-int closeDoor = 0;      //flag command, if set to 1 indicates that the door should become closed
-int emptyDoor = 0;      //flag command, if set to 1 indicates that the door should be in a -90 degree position to empty the waste bin,this flag should always take priority over open and close flags.
-int sleep_mode = 0;     //flag variable,if set to 1 indicates that the system is in sleep mode,the LCD should be turned off and the leds freezed.
-int doorStatus = 0;
 
 void setup(){
     sched = new Scheduler();
     shareData.doorStatus=0;
     shareData.fillPercentage = 0.0;
-    shareData.temperature = 1.0;
+    shareData.temperature = 0.0;
+    shareData.closeDoor = 0;
+    shareData.openDoor = 0;
+    shareData.emptyDoor = 0;
+    shareData.tError = 0;
+    shareData.sleep_mode = 0;
+    shareData.wError = 0;
+    shareData.tError = 0;
+    shareData.ignoreTempError = 0;
+
     sched->init(BASE_PERIOD);
     /*Setup tasks*/
     task_for_temp = new TemperatureTask(TEMPERATURE_PIN,MAX_TEMPERATURE_FOR_ERROR);
@@ -76,7 +76,7 @@ void setup(){
     sched->addTask(task_for_button);
 
     task_for_serial = new SerialTask();
-    task_for_serial->init(BASE_PERIOD);
+    task_for_serial->init(BASE_PERIOD*4);
     sched->addTask(task_for_serial);
 
     task_for_leds = new LedTask(GREEN_LED_PIN,RED_LED_PIN);

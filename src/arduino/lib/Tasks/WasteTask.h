@@ -4,8 +4,6 @@
 #include "SonarWaste.h"
 #include "../lib/Tasks/Task.h"
 
-extern int wError;
-
 class WasteTask : public Task {
 private:
     SonarWaste* sonarSensor; // Riferimento al sensore

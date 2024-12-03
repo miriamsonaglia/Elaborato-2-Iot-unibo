@@ -1,6 +1,8 @@
 #include "../lib/Tasks/LedTask.h"
 #include "../lib/Components/Led.h"
+#include "../lib/Scheduling/SharableData.h"
 
+extern SharableData shareData;
 
 LedTask::LedTask(int green,int red){
     green_led_pin = green;
@@ -17,8 +19,8 @@ void LedTask::init(int period){
 }
 
 void LedTask::tick(){
-    if(!sleep_mode){
-        if(tError || wError){
+    if(!shareData.sleep_mode){
+        if(shareData.tError || shareData.wError){
             if(status==WORKING){
                 status = ERROR;
                 green_led->switchOff();

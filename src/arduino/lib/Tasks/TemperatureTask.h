@@ -4,9 +4,6 @@
 #include "TemperatureSensor.h"
 #include "../lib/Tasks/Task.h"
 
-/*Global variables (read/write)*/
-extern int tError;
-
 class TemperatureTask: public Task {
 private:
     TemperatureSensor* tempSensor; // Riferimento al sensore

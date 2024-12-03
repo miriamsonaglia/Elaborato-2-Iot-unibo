@@ -4,14 +4,6 @@
 #include <LiquidCrystal_I2c.h>
 #include <Wire.h>
 
-extern int wError;
-extern int tError;
-extern int openDoor;
-extern int closeDoor;
-extern int emptyDoor;
-extern int sleep_mode;
-extern int doorStatus;
-
 class Lcd{
 public:
   Lcd(int address, int cols, int rows);

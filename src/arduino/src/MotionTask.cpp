@@ -1,7 +1,10 @@
 #include "../lib/Tasks/MotionTask.h"
+#include "../lib/Scheduling/SharableData.h"
 #include <Arduino.h>
 
 #define SECONDS_TO_MILLS(x) ((x)*1000)
+
+extern SharableData shareData;
 
 MotionTask::MotionTask(int pin,int maxInactiveTime){
     sensor_pin = pin;
@@ -17,14 +20,14 @@ void MotionTask::init(int period){
 }
 
 void MotionTask::tick() {
-        if(openDoor || closeDoor){
+        if(shareData.openDoor || shareData.closeDoor){
             if(status!=MOVING){
-                sleep_mode = 0;
+                shareData.sleep_mode = 0;
                 sleep_mode_counter = 0;
                 status = MOVING;
             }
         }else if(sensor->movementDetected()){
-            sleep_mode = 0;
+            shareData.sleep_mode = 0;
             sleep_mode_counter = 0;
             status = MOVING;
         }
@@ -37,7 +40,7 @@ void MotionTask::tick() {
             else if(status==PENDING_SLEEP){
                 if(millis()-sleep_mode_counter>=maxInactiveTime){
                     status = SLEEP;
-                    sleep_mode = 1;
+                    shareData.sleep_mode = 1;
                 }
             }
         }

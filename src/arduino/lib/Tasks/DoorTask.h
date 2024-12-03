@@ -4,13 +4,6 @@
 #include "Task.h"
 #include "Door.h"
 
-//global variables (read)
-extern int tError;
-extern int wError;
-//global variables (read/write)
-extern int openDoor;
-extern int closeDoor;
-extern int emptyDoor;
 
 class DoorTask:public Task {
 public:

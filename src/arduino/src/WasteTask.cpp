@@ -1,7 +1,7 @@
 #include "WasteTask.h"
 #include "../lib/Scheduling/SharableData.h"
 #include <Arduino.h>
-#define MAX_ALLOWED_SUCCESSIVE_LOW_READINGS 7
+#define MAX_ALLOWED_SUCCESSIVE_LOW_READINGS 2
 #define MAX_FREE_HEIGHT_EXPECTED 100.0
 
 extern struct SharableData shareData;
@@ -25,18 +25,19 @@ void WasteTask::tick(){
             successive_low_readings++;
             if(successive_low_readings>MAX_ALLOWED_SUCCESSIVE_LOW_READINGS){
                 status = FULL;
-                wError = 1;
+                shareData.wError = 1;
             }
         }
         else
         {
             status = OPENABLE;
-            wError = 0;
+            shareData.wError = 0;
             successive_low_readings = 0;
         }
     }
     last_measurment = measure;
     //update fill perc.
+    Serial.println(last_measurment);
     double capped_measure = min(last_measurment,MAX_FREE_HEIGHT_EXPECTED);
     shareData.fillPercentage = ((max(MAX_FREE_HEIGHT_EXPECTED-capped_measure,0.0))/MAX_FREE_HEIGHT_EXPECTED)*100.0;
 }

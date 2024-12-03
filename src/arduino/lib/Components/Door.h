@@ -2,8 +2,6 @@
 #define __DOOR__
 #include <Servo.h>
 
-extern int doorStatus;
-
 class Door{
 public:
   Door(int pin);

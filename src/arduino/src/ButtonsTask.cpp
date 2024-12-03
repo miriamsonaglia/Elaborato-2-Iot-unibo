@@ -1,9 +1,11 @@
 #include "../lib/Tasks/ButtonsTask.h"
 #include "../lib/Components/Button.h"
+#include "../lib/Scheduling/SharableData.h"
 #include <Arduino.h>
 
 #define ALLOWED_TICKS_FOR_COMMAND_RESOLUTIONS 10
 
+extern SharableData shareData;
 
 ButtonsTask::ButtonsTask(int open,int close){
     open_button_pin = open;
@@ -18,23 +20,21 @@ void ButtonsTask::init(int period){
 }
 
 void ButtonsTask::tick(){
-    if(!sleep_mode){
+    if(!shareData.sleep_mode){
         if(status == NO_COMMAND){
             if(open_button->isPressed() && !close_button->isPressed()){
                 status = OPEN_PENDING;
-                closeDoor = 0;
-                openDoor = 1;
-                doorStatus = 1;
+                shareData.closeDoor = 0;
+                shareData.openDoor = 1;
             }
             else if(!open_button->isPressed() && close_button->isPressed()){
                 status = CLOSE_PENDING;
-                closeDoor = 1;
-                openDoor = 0;
-                doorStatus = 0;
+                shareData.closeDoor = 1;
+                shareData.openDoor = 0;
             }
         }
         //(This shouuld never happened,but just in case: if no command is pending we put the status to NO_COMMAND)
-        else if(!(emptyDoor | openDoor | closeDoor)){
+        else if(!(shareData.emptyDoor | shareData.openDoor | shareData.closeDoor)){
             status = NO_COMMAND;
             ticks_elapsed = 0;
         }
@@ -43,8 +43,8 @@ void ButtonsTask::tick(){
             if(ticks_elapsed>=ALLOWED_TICKS_FOR_COMMAND_RESOLUTIONS){
                 ticks_elapsed = 0;
                 status = NO_COMMAND;
-                closeDoor = 0;
-                openDoor = 0;
+                shareData.closeDoor = 0;
+                shareData.openDoor = 0;
             }
         }
     }

@@ -3,8 +3,6 @@
 
 #include <Arduino.h>
 
-extern int doorStatus;
-
 class SerialHandler
 {
 private:
