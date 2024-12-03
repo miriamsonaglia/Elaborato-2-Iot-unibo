@@ -1,7 +1,6 @@
 #include "WasteTask.h"
 #include "../lib/Scheduling/SharableData.h"
 #include <Arduino.h>
-#define MARGINAL_ERROR 2
 #define MAX_ALLOWED_SUCCESSIVE_LOW_READINGS 7
 #define MAX_FREE_HEIGHT_EXPECTED 100.0
 
@@ -22,7 +21,6 @@ void WasteTask::tick(){
     double measure = sonarSensor->getDistance();
 
     if(last_measurment!=-1.0){
-        //if lower height found,bin is being emptied,do not run errors
         if(sonarSensor->isFull()){
             successive_low_readings++;
             if(successive_low_readings>MAX_ALLOWED_SUCCESSIVE_LOW_READINGS){

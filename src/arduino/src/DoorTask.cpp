@@ -21,7 +21,6 @@ void DoorTask::init(int period){
 void DoorTask::tick(){
     if(status==EMPTYING){
         if(millis()-emptyingTimer>TIME_FOR_EMPTYING){
-            doorStatus = 0;
             status = CLOSED;
             door->close();
             emptyingTimer = 0;
@@ -51,7 +50,6 @@ void DoorTask::tick(){
         emptyDoor = 0;
         if(closeDoor || (millis()-emptyingTimer>TIME_FOR_OPENING)){
             status = CLOSED;
-            doorStatus = 0;
             door->close();
             closeDoor = 0;
             emptyingTimer = 0;
@@ -63,7 +61,6 @@ void DoorTask::tick(){
             if(status==CLOSED){
                 door->open();
                 status = OPEN;
-                doorStatus = 1;
                 emptyingTimer = millis();
             }
             openDoor = 0;

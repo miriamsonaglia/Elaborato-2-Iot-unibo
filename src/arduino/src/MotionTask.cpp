@@ -16,7 +16,7 @@ void MotionTask::init(int period){
     errorControll = 0;
 }
 
-void MotionTask::tick(){
+void MotionTask::tick() {
         if(openDoor || closeDoor){
             if(status!=MOVING){
                 sleep_mode = 0;
@@ -27,7 +27,8 @@ void MotionTask::tick(){
             sleep_mode = 0;
             sleep_mode_counter = 0;
             status = MOVING;
-        }else
+        }
+        else
         {
             if(status == MOVING){
                 status = PENDING_SLEEP;
@@ -40,5 +41,4 @@ void MotionTask::tick(){
                 }
             }
         }
-    
 }

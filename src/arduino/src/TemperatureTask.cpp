@@ -34,6 +34,7 @@ void TemperatureTask::tick(){
             }
             else if(status == HEATING && (millis()-startTime >= MAX_TIME_HEATING)){
                 tError = 1;
+                status = OVERHEATING;
             }
     }else{
         tError = 0;

@@ -64,11 +64,11 @@ void setup(){
     sched->addTask(task_for_temp);
 
     task_for_waste = new WasteTask(TRIG_PIN,ECHO_PIN,MIN_HEIGHT_ACCEPTED);
-    task_for_waste->init(BASE_PERIOD*2);
+    task_for_waste->init(BASE_PERIOD*5);
     sched->addTask(task_for_waste);
 
     task_for_motion = new MotionTask(MOVEMENT_PIN,MAX_INACTIVITY_TIME);
-    task_for_motion->init(BASE_PERIOD*2);
+    task_for_motion->init(BASE_PERIOD*5);
     sched->addTask(task_for_motion);
 
     task_for_button = new ButtonsTask(OPEN_BUTTON,CLOSE_BUTTON);
@@ -76,15 +76,15 @@ void setup(){
     sched->addTask(task_for_button);
 
     task_for_serial = new SerialTask();
-    task_for_serial->init(BASE_PERIOD*5);
+    task_for_serial->init(BASE_PERIOD);
     sched->addTask(task_for_serial);
 
     task_for_leds = new LedTask(GREEN_LED_PIN,RED_LED_PIN);
-    task_for_leds->init(BASE_PERIOD*3);
+    task_for_leds->init(BASE_PERIOD*5);
     sched->addTask(task_for_leds);
 
     task_for_door = new DoorTask(DOOR_PIN);
-    task_for_door->init(BASE_PERIOD*2);
+    task_for_door->init(BASE_PERIOD);
     sched->addTask(task_for_door);
 
     task_for_lcd = new LcdTask(LCDADDRESS, LCDCOLS, LCDROWS);

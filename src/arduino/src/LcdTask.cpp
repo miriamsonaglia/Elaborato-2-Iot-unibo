@@ -30,14 +30,11 @@ void LcdTask::tick(){
         timerDelay = 0;
     }else if(tError){
         lcd->message("PROBLEM DETECTED");
-        doorStatus = 0;
         timerDelay = 0;
 
     }else if(wError){
         lcd->message("CONTAINER IS FULL");
-        doorStatus = 0;
         timerDelay = 0;
-
     }
     else if(shareData.doorStatus == (int)OPEN)
     {

@@ -1,8 +1,8 @@
 #include "../lib/Tasks/ButtonsTask.h"
 #include "../lib/Components/Button.h"
-#include <Arduino.h> 
+#include <Arduino.h>
 
-#define ALLOWED_TICKS_FOR_COMMAND_RESOLUTIONS 20
+#define ALLOWED_TICKS_FOR_COMMAND_RESOLUTIONS 10
 
 
 ButtonsTask::ButtonsTask(int open,int close){
@@ -25,7 +25,6 @@ void ButtonsTask::tick(){
                 closeDoor = 0;
                 openDoor = 1;
                 doorStatus = 1;
-                
             }
             else if(!open_button->isPressed() && close_button->isPressed()){
                 status = CLOSE_PENDING;
@@ -34,6 +33,7 @@ void ButtonsTask::tick(){
                 doorStatus = 0;
             }
         }
+        //(This shouuld never happened,but just in case: if no command is pending we put the status to NO_COMMAND)
         else if(!(emptyDoor | openDoor | closeDoor)){
             status = NO_COMMAND;
             ticks_elapsed = 0;
