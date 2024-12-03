@@ -101,6 +101,7 @@ public class OperatorDashboard {
                 String input ="";
                 if(portInput.hasNextLine()){
                     input = portInput.nextLine();
+                    System.out.println(input);
                 }
                 if (true) {    // Se il numero di bytes letti > 0, li converte in una Stringa
                     String data = input;

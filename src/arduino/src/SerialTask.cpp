@@ -25,14 +25,15 @@ void SerialTask::tick(){
             shareData.ignoreTempError = 1;
         }
     }
-    //send data to java GUI (temperature,percentage fill ecc...)
-    //handler->tryWrite(std::format("STATUS: Filling:{}% Temperature:{}°C",shareData.fillPercentage,shareData.temperature));
-
-    handler->tryWrite("STATUS:Filling:");
-    handler->tryWrite(shareData.fillPercentage);
-    handler->tryWrite(" Temperature:");
-    handler->tryWrite(shareData.temperature);
-    handler->tryWrite("C Status:");
-    handler->tryWriteLine(shareData.wError || shareData.tError? "Unvailable":"Available");
+    //This 
+    String piece1 = "STATUS:Filling:";
+    String piece2 = " Temperature:";
+    String piece3 = "C Status:";
+    String piece4 = shareData.wError || shareData.tError? "Unvailable":"Available";
+    char* dataOutput = (char*)(malloc(128));
+    String fullData = piece1+shareData.fillPercentage+piece2+shareData.temperature+piece3+piece4;
+    fullData.toCharArray(dataOutput,128,0);
+    handler->tryWriteLine(dataOutput);
+    free(dataOutput);
     memset(buffer,0,sizeof(buffer));
 }
